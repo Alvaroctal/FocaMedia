@@ -1,0 +1,43 @@
+/* Empty. Add your own CSS if you like */
+
+p.item-text-wrap {
+    overflow: initial;
+    white-space: initial;
+}
+
+div.col.col-media {
+    -webkit-flex: unset;
+    -moz-box-flex: unset;
+    -moz-flex: unset;
+    -ms-flex: unset;
+    width: unset;
+}
+img.img-poster {
+    width: 100%;
+    height: auto;
+}
+
+img.img-poster-92 {
+    height: 138px;
+    width: 92px;
+}
+img.img-poster-154 {
+    max-height: 278px;
+    max-width: 154px;
+}
+img.img-poster-185 {
+    max-height: 278px;
+    max-width: 185px;
+}
+img.img-poster-342 {
+    max-height: 278px;
+    max-width: 342px;
+}
+img.img-poster-500 {
+    max-height: 278px;
+    max-width: 500px;
+}
+img.img-poster-780 {
+    max-height: 278px;
+    max-width: 780px;
+}
