@@ -3,10 +3,12 @@ angular.module('starter.controllers', [])
 .factory('MediaService', function($q, $http) {
 
   var media = $q.defer();
+  var test = [];
 
   $http.get('http://localhost:8000/data/media.db') // usa http://server.meriland.es/media.db para ejecutar como aplicacion
     .success(function(data, status, headers,config){
       media.resolve(data);
+      test = data;
     })
     .error(function(data, status, headers,config){
       media.reject(err);
@@ -18,6 +20,9 @@ angular.module('starter.controllers', [])
     },
     getMovies: function() {
       return media.filter(function (el) { return el.type == 'movie' });
+    },
+    getById: function(id){
+      return test.filter(function (el) { return el._id == id })[0];
     }
   }
 })
@@ -72,4 +77,12 @@ angular.module('starter.controllers', [])
     $scope.movies = data;
     console.log(data);
   });
+})
+
+.controller('MovieCtrl', function($scope, $stateParams, MediaService) {
+
+  var media = MediaService.get();
+  $scope.movies = [];
+  $scope.movie = MediaService.getById($stateParams.id);
 });
+

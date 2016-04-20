@@ -1,7 +1,7 @@
 <ion-view view-title="Películas">
   <ion-content>
     <div class="list">
-      <a class="item row" collection-repeat="movie in movies" href="#/app/movie/{{movie._id}}">
+      <a class="item row" collection-repeat="movie in movies" href="#/app/movies/{{movie._id}}">
         <div class="col col-media">
           <img class="img-poster img-poster-92" ng-src="https://image.tmdb.org/t/p/w92{{movie.data.poster_path}}" height="138" width="92">
         </div>
