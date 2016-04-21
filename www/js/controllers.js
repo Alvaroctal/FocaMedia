@@ -77,6 +77,11 @@ angular.module('starter.controllers', [])
     $scope.movies = data;
     console.log(data);
   });
+
+  $scope.showSearch = false;
+  $scope.toggleSearch = function() {
+    $scope.showSearch = !$scope.showSearch;
+  }
 })
 
 .controller('MovieCtrl', function($scope, $stateParams, MediaService) {

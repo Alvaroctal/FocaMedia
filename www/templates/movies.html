@@ -1,7 +1,17 @@
-<ion-view view-title="Películas">
+<ion-view view-title="Movies">
+  <ion-nav-buttons side="right">
+    <a data-tap-disabled="true" class="button button-icon icon positive" ng-click="toggleSearch()" ng-class="{'ion-ios-search':!showSearch,'ion-ios-close-outline':showSearch}"></a>
+  </ion-nav-buttons>
   <ion-content>
+    <div class="list" ng-show="showSearch">
+      <div class="item item-input-inset">
+        <label class="item-input-wrapper">
+          <input type="text" placeholder="search..." ng-model="search.data.title">
+        </label>
+      </div>
+    </div>
     <div class="list">
-      <a class="item row" collection-repeat="movie in movies" href="#/app/movies/{{movie._id}}">
+      <a class="item row" collection-repeat="movie in movies | filter:search" href="#/app/movies/{{movie._id}}">
         <div class="col col-media">
           <img class="img-poster img-poster-92" ng-src="https://image.tmdb.org/t/p/w92{{movie.data.poster_path}}" height="138" width="92">
         </div>
