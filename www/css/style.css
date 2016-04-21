@@ -41,3 +41,12 @@ img.img-poster-780 {
     max-height: 278px;
     max-width: 780px;
 }
+
+/* Movie View */
+
+#movie-stream-player {
+    width: 100%;
+}
+#movie-stream-info {
+    width: 100%;
+}

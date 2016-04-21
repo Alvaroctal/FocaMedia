@@ -1,5 +1,27 @@
-<ion-view view-title="Search">
+<ion-view view-title="{{movie.data.title}}">
   <ion-content>
-    {{movie}}
+    <div class="row">
+      <div class="col">
+        <video id="movie-stream-player" controls="controls" preload="metadata" webkit-playsinline="webkit-playsinline" class="videoPlayer">
+          <source src="http://player.vimeo.com/external/85569724.sd.mp4?s=43df5df0d733011263687d20a47557e4" type="video/mp4"/>
+        </video>
+      </div>
+    </div>
+    <div class="row">
+      <div id="movie-stream-info" class="card">
+        <div class="item item-text-wrap">
+          <div class="row">
+            <div class="col">
+              <h2>{{movie.data.title}} <small>({{movie.data.release_date}})</small></h2><br />
+              <h4>{{movie.local.size|bytes}}</h4>
+            </div>
+            <div class="col text-right">
+              <button class="button button-small icon-left ion-social-youtube-outline button-assertive" ng-click="login()">Ver trailer</button>
+              <button class="button button-small icon-left ion-ios-plus-outline button-energized" ng-click="addToWatchlist()">Añadir a la watchlist</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </ion-content>
 </ion-view>
