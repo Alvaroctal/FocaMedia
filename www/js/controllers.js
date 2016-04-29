@@ -18,11 +18,11 @@ angular.module('starter.controllers', [])
     get: function () {
       return media.promise
     },
-    getMovies: function() {
-      return media.filter(function (el) { return el.type == 'movie' });
+    getMedia: function(type) {
+      return test.filter(function (media) { return media.type == type });
     },
     getById: function(id){
-      return test.filter(function (el) { return el._id == id })[0];
+      return test.filter(function (media) { return media._id == id })[0];
     }
   }
 })
@@ -73,9 +73,8 @@ angular.module('starter.controllers', [])
   var media = MediaService.get();
   $scope.movies = [];
 
-  media.then(function(data) {
-    $scope.movies = data;
-    console.log(data);
+  media.then(function(data) { // Esto es una chapuza, hasta que se le ponga una pantalla de inicio.
+    $scope.movies = MediaService.getMedia('movie');
   });
 
   $scope.showSearch = false;
