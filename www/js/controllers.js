@@ -98,5 +98,13 @@ angular.module('starter.controllers', [])
       number = Math.floor(Math.log(bytes) / Math.log(1024));
     return (bytes / Math.pow(1024, Math.floor(number))).toFixed(precision) +  ' ' + units[number];
   }
+})
+
+.controller('TrailerCtrl', function($scope, $stateParams, MediaService, $sce) {
+
+  var media = MediaService.get();
+  $scope.movies = [];
+  $scope.movie = MediaService.getById($stateParams.id);
+  $scope.trailer = $sce.trustAsResourceUrl("https://www.youtube.com/embed/" + $scope.movie.data.videos.results[0].key);
 });
 
