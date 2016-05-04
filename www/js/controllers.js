@@ -27,7 +27,7 @@ angular.module('starter.controllers', [])
   }
 })
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, $sce) {
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -46,25 +46,22 @@ angular.module('starter.controllers', [])
     $scope.modal = modal;
   });
 
+  // Create the trailer modal that we will use later
+  $ionicModal.fromTemplateUrl('templates/trailer.html', {
+    scope: $scope
+  }).then(function(modal) {
+    $scope.modalTrailer = modal;
+  });
+
+
   // Triggered in the login modal to close it
-  $scope.closeLogin = function() {
-    $scope.modal.hide();
+  $scope.closeTrailer = function() {
+    $scope.modalTrailer.hide();
   };
 
-  // Open the login modal
-  $scope.login = function() {
-    $scope.modal.show();
-  };
-
-  // Perform the login action when the user submits the login form
-  $scope.doLogin = function() {
-    console.log('Doing login', $scope.loginData);
-
-    // Simulate a login delay. Remove this and replace with your login
-    // code if using a login system
-    $timeout(function() {
-      $scope.closeLogin();
-    }, 1000);
+  $scope.showTrailer = function(trailers) {
+    $scope.modalTrailer.trailerURL = $sce.trustAsResourceUrl("https://www.youtube.com/embed/" + trailers[0].key);
+    $scope.modalTrailer.show();
   };
 })
 

@@ -1,11 +1,11 @@
 <ion-modal-view>
   <ion-header-bar>
-    <h1 class="title">Trailer: </h1>
+    <h1 class="title">{{movie.data.title}}</h1>
     <div class="buttons">
-      <button class="button button-clear" ng-click="closeLogin()">Close</button>
+      <button class="button button-clear" ng-click="closeTrailer()">Close</button>
     </div>
   </ion-header-bar>
   <ion-content>
-    <iframe  width="560" height="315" src="{{trailer}}" frameborder="0" allowfullscreen></iframe>
+    <iframe  width="100%" height="400" ng-src="{{modalTrailer.trailerURL}}" frameborder="0" allowfullscreen></iframe> 
   </ion-content>
 </ion-modal-view>

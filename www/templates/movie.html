@@ -16,9 +16,7 @@
               <h4>{{movie.local.size|bytes}}</h4>
             </div>
             <div class="col text-right">
-              <a href="#/app/trailer/{{movie._id}}">
-                <button class="button button-small icon-left ion-social-youtube-outline button-assertive">Ver trailer</button>
-              </a>
+              <button class="button button-small icon-left ion-social-youtube-outline button-assertive" ng-click = "showTrailer(movie.data.videos.results)">Ver trailer</button>
               <button class="button button-small icon-left ion-ios-plus-outline button-energized" ng-click="addToWatchlist()">Añadir a la watchlist</button>
             </div>
           </div>
