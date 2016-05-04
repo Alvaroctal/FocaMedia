@@ -39,6 +39,17 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       }
     }
   })
+
+  .state('app.connection', {
+    url: '/connection',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/connection.html',
+        controller: 'ConnectionCtrl'
+      }
+    }
+  })
+
   .state('app.movies', {
     url: '/movies',
     views: {
@@ -59,15 +70,6 @@ angular.module('starter', ['ionic', 'starter.controllers'])
     }
   })
 
-  .state('app.trailer', {
-    url: '/trailer/:id',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/trailer.html',
-        controller: 'TrailerCtrl'
-      }
-    }
-  });
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/movies');
+  $urlRouterProvider.otherwise('/app/connection');
 });
