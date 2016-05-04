@@ -24,6 +24,12 @@ angular.module('starter', ['ionic', 'starter.controllers'])
 
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
+    .state('ini', {
+    url: '/',
+    templateUrl: 'templates/conexion.html',
+    controller: 'ConexionCtrl'
+  })
+
     .state('app', {
     url: '/app',
     abstract: true,
