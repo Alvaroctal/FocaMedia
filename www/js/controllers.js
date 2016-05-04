@@ -4,44 +4,27 @@ angular.module('starter.controllers', [])
 
   var media = $q.defer();
   var test = [];
-  var ip = '';
-  var port = '';
-  var connected = false;
 
-  var connect = function(ip, port, callBack) { 
-    this.ip = ip;
-    this.port = port;
-    $http.get('http://'+ip+':'+port+'/data/media.db') // usa http://server.meriland.es/media.db para ejecutar como aplicacion
+  $http.get('http://localhost:8000/data/media.db') // usa http://server.meriland.es/media.db para ejecutar como aplicacion
     .success(function(data, status, headers,config){
       media.resolve(data);
       test = data;
-      connected = true;
-      console.log(data);
-      callBack();
     })
     .error(function(data, status, headers,config){
-      //media.reject(err);
-      connected = false;
-      callBack();
+      media.reject(err);
     });
-  };
 
   return {
     get: function () {
-      return media.promise;
+      return media.promise
     },
     getMedia: function(type) {
-      return test.filter(function (media) { return media.type == type; });
+      return test.filter(function (media) { return media.type == type });
     },
     getById: function(id){
-      return test.filter(function (media) { return media._id == id; })[0];
-    },
-    connected: function (){
-      return connected; },
-    connect: function (ip, port, callBack){
-      connect(ip, port, callBack);
+      return test.filter(function (media) { return media._id == id })[0];
     }
-  };
+  }
 })
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout, $sce) {
@@ -82,64 +65,18 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('ConexionCtrl', function($scope, $location, MediaService, $timeout, $ionicLoading) {
-  console.log("CONECTAR");
-  if(!MediaService.connected()){
-    $scope.ipPuertoData = {};
+.controller('MoviesListCtrl', function($scope, $q, MediaService) {
 
-    $scope.cargaShow = function() {
-      $ionicLoading.show({
-        template: 'Cargando...'
-      });
-    };
+  var media = MediaService.get();
+  $scope.movies = [];
 
-    $scope.cargaError = function(){
-      $ionicLoading.show({
-        template: 'Error'
-      });
-    };
-
-    $scope.cargaHide = function(){
-      $ionicLoading.hide();
-    };
-
-    $scope.closeIpPuerto = function() {
-      
-    };
-    $scope.doIpPuerto = function() {
-      console.log('Doing conexion', $scope.ipPuertoData);
-      $scope.cargaShow();
-      MediaService.connect($scope.ipPuertoData.ip, $scope.ipPuertoData.puerto, function(){
-        if(!MediaService.connected()){
-          $scope.cargaError();
-          $timeout(function() {
-            $scope.cargaHide();
-          }, 2000);
-        }
-        else{
-          $scope.cargaHide();
-          $location.path('/app/movies');
-        }
-      });
-    };
-  }
-  else{
-    $location.path('/app/movies');
-  }
-})
-
-.controller('MoviesListCtrl', function($scope, $q, MediaService, $location) {
-  if(MediaService.connected()){
+  media.then(function(data) { // Esto es una chapuza, hasta que se le ponga una pantalla de inicio.
     $scope.movies = MediaService.getMedia('movie');
+  });
 
-    $scope.showSearch = false;
-    $scope.toggleSearch = function() {
-      $scope.showSearch = !$scope.showSearch;
-    };
-  }
-  else{
-    console.log('Movies: No conectado');
-    $location.path('/');
+  $scope.showSearch = false;
+  $scope.toggleSearch = function() {
+    $scope.showSearch = !$scope.showSearch;
   }
 })
 
@@ -157,7 +94,7 @@ angular.module('starter.controllers', [])
     var units = ['bytes', 'kB', 'MB', 'GB', 'TB', 'PB'],
       number = Math.floor(Math.log(bytes) / Math.log(1024));
     return (bytes / Math.pow(1024, Math.floor(number))).toFixed(precision) +  ' ' + units[number];
-  };
+  }
 })
 
 .controller('TrailerCtrl', function($scope, $stateParams, MediaService, $sce) {
