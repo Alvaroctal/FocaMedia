@@ -27,6 +27,6 @@ $ ionic platform add ionic
 
 Now, launch the project:
 ```bash
-$ ionic emulate browser
+$ ./FocaMediaClient.sh
 ```
 You'll need to relaunch the project with every change you make.

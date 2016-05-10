@@ -38,7 +38,7 @@ angular.module('starter.controllers', [])
   //----------------------------------------------------------------------------
   //  Modal Trailer
   //----------------------------------------------------------------------------
-  
+
   $ionicModal.fromTemplateUrl('templates/trailer.html', {
     scope: $scope
   }).then(function(modal) {
@@ -56,7 +56,7 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('ConnectionCtrl', function($scope, $location, $ionicLoading, MediaService) {
+.controller('ConnectionCtrl', function($scope, $location, $ionicLoading, $http, MediaService) {
 
   //----------------------------------------------------------------------------
   //  Connection Controller
@@ -66,16 +66,33 @@ angular.module('starter.controllers', [])
     MediaService.connect(ip, port, function(err, data) {
       if (! err) {
         // Connection Success
-        
+
         $location.path('/app/movies');
       }
       else {
         // Connection Error
-        
+
         console.log('connection err');
       }
     });
   }
+
+  //----------------------------------------------------------------------------
+  //  Connection search service
+  //----------------------------------------------------------------------------
+
+  $http.get('http://127.0.0.1:8080/services')
+      .success(function(data) {
+        $scope.connectFunction = "connect(" + data.host + ", " + data.port + ")";
+
+//        la funcion esta apañada para que se conecte a si misma y no al servidor de verdad
+//        $scope.connectFunction = "connect(" + data.host + ", 8000)";
+        $scope.connectMessage = "Conectarse a "+ data.name;
+      })
+      .error(function(data) {
+        $scope.connectFunction = "";
+        $scope.connectMessage = "no se encontraron servidores";
+      });
 })
 
 .controller('MoviesListCtrl', function($scope, MediaService) {
@@ -110,4 +127,3 @@ angular.module('starter.controllers', [])
     return (bytes / Math.pow(1024, Math.floor(number))).toFixed(precision) +  ' ' + units[number];
   }
 });
-
