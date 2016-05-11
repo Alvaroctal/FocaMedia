@@ -4,23 +4,19 @@ angular.module('starter.controllers', [])
 
   var media = [];
 
-  var connected = false;
-
   return {
     connect: function (ip, port, callback) {
 
-      $http.get('http://' + ip + ':' + port + '/data/index.json') // usa http://server.meriland.es/media.db para ejecutar como aplicacion
-      .success(function(data, status){
-        connected = true;
-        media = data;
+      $http.get('http://' + ip + ':' + port + '/index').then(
+        function(response) {
+          media = response.data.data;
 
-        callback(null, data);
-      })
-      .error(function(err, status) {
-        connected = false;
+          callback(null, response.data);
+        }, function(response) {
+          callback(response, null);
+        });
 
-        callback(err, null);
-      });
+      console.log('conectar');
 
       return media.promise;
     },
@@ -65,7 +61,7 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('ConnectionCtrl', function($scope, $location, $ionicLoading, $http, MediaService) {
+.controller('ConnectionCtrl', function($scope, $location, $ionicPopup, $ionicLoading, $http, MediaService) {
 
   //----------------------------------------------------------------------------
   //  Connection Controller
@@ -81,7 +77,10 @@ angular.module('starter.controllers', [])
       else {
         // Connection Error
 
-        console.log('connection err');
+        $ionicLoading.show({
+          template: 'Error de conexion',
+          duration: 1000
+        });
       }
     });
   }
@@ -89,19 +88,12 @@ angular.module('starter.controllers', [])
   //----------------------------------------------------------------------------
   //  Connection search service
   //----------------------------------------------------------------------------
-
-  $http.get('http://127.0.0.1:8080/services')
-      .success(function(data) {
-        $scope.connectFunction = "connect(" + data.host + ", " + data.port + ")";
-
-//        la funcion esta apañada para que se conecte a si misma y no al servidor de verdad
-//        $scope.connectFunction = "connect(" + data.host + ", 8000)";
-        $scope.connectMessage = "Conectarse a "+ data.name;
-      })
-      .error(function(data) {
-        $scope.connectFunction = "";
-        $scope.connectMessage = "no se encontraron servidores";
-      });
+  
+  /*var polo = require('polo');
+  var apps = polo();
+  var service = apps.once('up', function(name, service) {
+    console.log(apps.get(name));
+  });*/
 })
 
 .controller('MoviesListCtrl', function($scope, MediaService) {
@@ -113,9 +105,7 @@ angular.module('starter.controllers', [])
   $scope.movies = MediaService.getMedia('movie');
 
   $scope.showSearch = false;
-  $scope.toggleSearch = function() {
-    $scope.showSearch = !$scope.showSearch;
-  }
+  $scope.toggleSearch = function() { $scope.showSearch = !$scope.showSearch }
 })
 
 .controller('TvshowsListCtrl', function($scope, MediaService) {
@@ -126,9 +116,7 @@ angular.module('starter.controllers', [])
 
   $scope.tvshows = MediaService.getMedia('tvshow');
   $scope.showSearch = false;
-  $scope.toggleSearch = function() {
-    $scope.showSearch = !$scope.showSearch;
-  }
+  $scope.toggleSearch = function() { $scope.showSearch = !$scope.showSearch }
 })
 
 .controller('MovieCtrl', function($scope, $stateParams, MediaService) {
