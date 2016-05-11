@@ -25,6 +25,14 @@
         })
       });
 
+      app.get('/trailer/:movieName', function(req, res){
+        //console.log("prueba");
+        //res.send(req.params.movieName);
+        getTrailer(req.params.movieName, function(data){
+          res.send(data);
+        })
+      });
+
 
 function getServices(callback){
   var polo = require('polo');
@@ -33,4 +41,29 @@ function getServices(callback){
       console.log(apps.get(name));
       callback(apps.get(name));
   });
-};
+}
+
+  function getTrailer(movieName, callback){
+  	var Xray = require("x-ray");
+    console.log(movieName.replace(/ /g, "+"));
+  	var xray = new Xray();
+  	xray('https://www.youtube.com/results?search_query=' + movieName.replace(/ /g, "+")+'trailer', 'a',
+  		[{
+  			a:'',
+  			href: '@href',
+  			css: '@class'
+  		}]
+  	)(function(err, a){
+  		var found = false;
+  		var i = 0;
+  		while((found === false) && (i < a.length)){
+  			var obj = a[i];
+  			if(obj.a !== 'undefined' && obj.href.indexOf("watch?v=") !== -1){
+  				if(obj.a.toLowerCase().indexOf(movieName) !== -1 && obj.href.split("watch?v=")[1] !== 'undefined'){
+  					return callback("https://www.youtube.com/embed/" + obj.href.split("watch?v=")[1]);
+  				}
+  			}
+  			i = i+1;
+  		}
+  	});
+  }

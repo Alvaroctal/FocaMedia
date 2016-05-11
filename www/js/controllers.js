@@ -33,7 +33,7 @@ angular.module('starter.controllers', [])
   }
 })
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout, $sce) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, $sce, $http) {
 
   //----------------------------------------------------------------------------
   //  Modal Trailer
@@ -50,9 +50,22 @@ angular.module('starter.controllers', [])
     $scope.trailerURL = $sce.trustAsResourceUrl('https://www.youtube.com/embed/');
   };
 
-  $scope.showTrailer = function(trailers) {
-    $scope.trailerURL = $sce.trustAsResourceUrl('https://www.youtube.com/embed/' + trailers[0].key);
-    $scope.modalTrailer.show();
+  $scope.showTrailer = function(movieData) {
+    if(movieData.data.videos.results.length != 0){
+      $scope.trailerURL = $sce.trustAsResourceUrl('https://www.youtube.com/embed/' + movieData.data.videos.results[0].key);
+      $scope.modalTrailer.show();
+    }
+    else{
+      $http.get('http://127.0.0.1:8080/trailer/'+ movieData.local.title.toLowerCase())
+          .success(function(data) {
+            $scope.trailerURL = $sce.trustAsResourceUrl(data);
+            $scope.modalTrailer.show();
+          })
+          .error(function(data) {
+            $scope.trailerURL = "";
+            $scope.modalTrailer.show();
+          });
+    }
   };
 })
 
