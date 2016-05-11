@@ -60,12 +60,32 @@ angular.module('starter', ['ionic', 'starter.controllers'])
     }
   })
 
+  .state('app.tvshows', {
+    url: '/tvshows',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/tvshows.html',
+        controller: 'TvshowsListCtrl'
+      }
+    }
+  })
+
   .state('app.movie', {
     url: '/movies/:id',
     views: {
       'menuContent': {
         templateUrl: 'templates/movie.html',
         controller: 'MovieCtrl'
+      }
+    }
+  })
+
+  .state('app.tvshow', {
+    url: '/tvshows/:id',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/tvshow.html',
+        controller: 'TvshowCtrl'
       }
     }
   })

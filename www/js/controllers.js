@@ -109,6 +109,19 @@ angular.module('starter.controllers', [])
   }
 })
 
+.controller('TvshowsListCtrl', function($scope, MediaService) {
+
+  //----------------------------------------------------------------------------
+  //  Tvshows Controller
+  //----------------------------------------------------------------------------
+
+  $scope.tvshows = MediaService.getMedia('tvshow');
+  $scope.showSearch = false;
+  $scope.toggleSearch = function() {
+    $scope.showSearch = !$scope.showSearch;
+  }
+})
+
 .controller('MovieCtrl', function($scope, $stateParams, MediaService) {
 
   //----------------------------------------------------------------------------
@@ -116,6 +129,22 @@ angular.module('starter.controllers', [])
   //----------------------------------------------------------------------------
 
   $scope.movie = MediaService.getById($stateParams.id);
+})
+
+.controller('TvshowCtrl', function($scope, $stateParams, MediaService) {
+
+  //----------------------------------------------------------------------------
+  //  Tvshow Controller
+  //----------------------------------------------------------------------------
+
+  $scope.tvshow = MediaService.getById($stateParams.id);
+  $scope.currentSeason = $scope.tvshow.data.seasons[0];
+
+  $scope.changeSeason = function (num){
+    $scope.currentSeason = $scope.tvshow.data.seasons[num];
+  };
+  console.log($scope.tvshow);
+  console.log($scope.currentSeason);
 })
 
 .filter('bytes', function() {
