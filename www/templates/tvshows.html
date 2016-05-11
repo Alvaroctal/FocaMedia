@@ -1,4 +1,4 @@
-<ion-view view-title="Movies">
+<ion-view view-title="Series">
 <ion-nav-buttons side="left">
    <!-- Toggle left side menu -->
    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
@@ -15,13 +15,13 @@
       </div>
     </div>
     <div class="list">
-      <a class="item row" collection-repeat="movie in movies | filter:search" href="#/app/movies/{{movie.data.id}}">
+      <a class="item row" collection-repeat="tvshow in tvshows | filter:search" href="#/app/tvshows/{{tvshow.data.id}}">
         <div class="col col-media">
-          <img class="img-poster img-poster-92" ng-src="https://image.tmdb.org/t/p/w92{{movie.data.poster_path}}" height="138" width="92">
+          <img class="img-poster img-poster-92" ng-src="https://image.tmdb.org/t/p/w92{{tvshow.data.poster_path}}" height="138" width="92">
         </div>
         <div class="col">
-          <h2>{{movie.data.title}}</h2>
-          <p class="item-text-wrap">{{movie.data.tagline}}</p>
+          <h2>{{tvshow.data.original_name}}</h2>
+          <p class="item-text-wrap">{{tvshow.data.overview}}</p>
         </div>
       </a>
     </div>
