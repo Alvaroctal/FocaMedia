@@ -33,7 +33,7 @@ angular.module('starter.controllers', [])
   }
 })
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout, $sce) {
+.controller('AppCtrl', function($scope, $ionicModal, $ionicLoading, $timeout, $sce) {
 
   //----------------------------------------------------------------------------
   //  Modal Trailer
@@ -51,8 +51,17 @@ angular.module('starter.controllers', [])
   };
 
   $scope.showTrailer = function(trailers) {
-    $scope.trailerURL = $sce.trustAsResourceUrl('https://www.youtube.com/embed/' + trailers[0].key);
-    $scope.modalTrailer.show();
+    if(trailers.length == 0){
+      $ionicLoading.show(
+      {
+        template: 'No hay trailers disponibles',
+        duration: 1000
+      });
+    }
+    else{
+      $scope.trailerURL = $sce.trustAsResourceUrl('https://www.youtube.com/embed/' + trailers[0].key);
+      $scope.modalTrailer.show();
+    }
   };
 })
 

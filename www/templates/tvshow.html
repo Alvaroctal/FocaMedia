@@ -7,34 +7,46 @@
             <div class="item item-text-wrap">
               <div class="row">
                 <div class="col">
-                  <h2>{{tvshow.data.original_name}} <small>({{tvshow.data.first_air_date}})</small></h2><br />
-                </div>
-                <div class="col text-right">
-                  <button class="button button-small icon-left ion-social-youtube-outline button-assertive" ng-click = "showTrailer(tvshow.data.videos.results)">Ver trailer</button>
-                  <button class="button button-small icon-left ion-ios-plus-outline button-energized" ng-click="addToWatchlist()">Añadir a la watchlist</button>
+                  <div class="row">
+                    <div class="col">
+                      <img class="img-poster img-poster-185" ng-src="https://image.tmdb.org/t/p/w185{{tvshow.data.poster_path}}" height="auto" width="185">
+                    </div>
+                    <div class="col">
+                      <p class="item-text-wrap">{{tvshow.data.overview}}</p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col">
+                      <h2>{{tvshow.data.original_name}} <small>({{tvshow.data.first_air_date}})</small></h2>
+                    </div>
+                    <div class="col">
+                      <button class="button button-small icon-left ion-social-youtube-outline button-assertive" ng-click = "showTrailer(tvshow.data.videos.results)">Ver trailer</button>
+                      <button class="button button-small icon-left ion-ios-plus-outline button-energized" ng-click="addToWatchlist()">Añadir a la watchlist</button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
+    <div class="row">
       <div class="col">
-        <div class="row">
-          <div class="col">
-            <div class="list">
-              <button class="button button-small icon-left ion-eye button-balanced" ng-repeat="season in tvshow.data.seasons" ng-click="changeSeason(season.season_number)">
-                Temporada {{season.season_number}}<small>({{season.air_date}})</small>
-              </button>
+        <div class="list">
+          <div class="item row" ng-repeat="season in tvshow.local.seasons">
+            <div class="col col-media">
+              <h2> Temporada {{season.number}}</h2>
+              <img class="img-poster img-poster-92" ng-src="https://image.tmdb.org/t/p/w92{{tvshow.data.seasons[season.number].poster_path}}" height="138" width="92">
+              <h3 style="color: #999;">({{tvshow.data.seasons[season.number].air_date}})</h3>
             </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <a class="item row" ng-repeat="episode in currentSeason.episodes" href="#/app/tvshows/{{tvshow.data.id}}/{{currentSeason.season_number}}/{{episode.episode_number}}">
-              <div class="col">
-                <h2>Episodio {{episode.episode_number}}: {{episode.name}} <small>({{episode.air_date}})</small></h2>
-              </div>
-            </a>
+            <div class="col">
+              <a class="item row" ng-repeat="episode in season.episodes" href="#/app/tvshows/{{tvshow.data.id}}/{{season.number}}/{{episode.number}}">
+                <div class="col">
+                  <h3>Episodio {{episode.number}}: {{episode.name}}</h3>
+                  <span class="item-note">({{tvshow.data.seasons[season.number].episodes[episode.number].air_date}})</span>
+                </div>
+              </a>
           </div>
         </div>
       </div>
