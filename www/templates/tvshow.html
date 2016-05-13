@@ -7,7 +7,7 @@
             <div class="item item-text-wrap">
               <div class="row">
                 <div class="col">
-                  <div class="row">
+                  <div class="row"> <!-- No en serio, que cojones ?  XD -->
                     <div class="col">
                       <img class="img-poster img-poster-185" ng-src="https://image.tmdb.org/t/p/w185{{tvshow.data.poster_path}}" height="auto" width="185">
                     </div>
@@ -38,7 +38,7 @@
             <div class="col col-media">
               <h2> Temporada {{season.number}}</h2>
               <img class="img-poster img-poster-92" ng-src="https://image.tmdb.org/t/p/w92{{tvshow.data.seasons[season.number].poster_path}}" height="138" width="92">
-              <h3 style="color: #999;">({{tvshow.data.seasons[season.number].air_date}})</h3>
+              <h3 style="color: #999;">({{tvshow.data.seasons[season.number].air_date || "No emitida"}})</h3>
             </div>
             <div class="col">
               <a class="item row" ng-repeat="episode in season.episodes" href="#/app/tvshows/{{tvshow.data.id}}/{{season.number}}/{{episode.number}}">
@@ -47,6 +47,7 @@
                   <span class="item-note">({{tvshow.data.seasons[season.number].episodes[episode.number].air_date}})</span>
                 </div>
               </a>
+            </div>
           </div>
         </div>
       </div>

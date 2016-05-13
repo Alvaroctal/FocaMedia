@@ -1,0 +1,67 @@
+<ion-view view-title="Estadísticas">
+  <ion-content>
+    <div class="list">
+
+      <div class="item item-divider">
+        Películas
+      </div>
+
+      <div class="item" href="#">
+        Total
+        <span class="item-note">
+          {{ movies.length }}
+        </span>
+      </div>
+      <div class="item" href="#">
+        Almacenamiento
+        <span class="item-note">
+          {{ sumMoviesSizes() | bytes }}
+        </span>
+      </div>
+      <div class="item" href="#">
+        Horas
+        <span class="item-note">
+          {{ sumMoviesHours() }} Horas
+        </span>
+      </div>
+
+      <!-- Series -->
+
+      <div class="item item-divider">
+        Series
+      </div>
+
+      <div class="item" href="#">
+        Total
+        <span class="item-note">
+          {{ tvshows.length }}
+        </span>
+      </div>
+      <div class="item" href="#">
+        Temporadas
+        <span class="item-note">
+          {{ sumSeasons() }}
+        </span>
+      </div>
+      <div class="item" href="#">
+        Capitulos
+        <span class="item-note">
+          {{ sumEpisodes() }}
+        </span>
+      </div>
+      <div class="item" href="#">
+        Almacenamiento
+        <span class="item-note">
+          {{ sumTvShowsSizes() | bytes }}
+        </span>
+      </div>
+      <div class="item" href="#">
+        Horas
+        <span class="item-note">
+          {{ sumTvShowsHours() }} Horas
+        </span>
+      </div>
+
+    </ion-tabs>
+  </ion-content>
+</ion-view>
