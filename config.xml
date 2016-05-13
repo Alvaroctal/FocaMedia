@@ -5,7 +5,7 @@
     FocaMedia basic client implementation
   </description>
   <author href="https://octal.es/foca/">
-      Alvaro Octal
+    Alvaro Octal
   </author>
   <content src="index.html"/>
   <access origin="*"/>

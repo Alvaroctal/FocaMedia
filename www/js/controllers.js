@@ -73,7 +73,7 @@ angular.module('starter.controllers', [])
       if (! err) {
         // Connection Success
 
-        $location.path('/app/movies');
+        $location.path('/app/tvshows');
       }
       else {
         // Connection Error
@@ -127,6 +127,10 @@ angular.module('starter.controllers', [])
 
   $scope.tvshow = MediaService.getById($stateParams.id);
   $scope.currentSeason = $scope.tvshow.data.seasons[0];
+
+  $scope.getSeasonData = function(seasons, season_number) {
+    return seasons.filter(function (season) { return season.season_number == season_number })[0];
+  }
 
   $scope.changeSeason = function (num){
     $scope.currentSeason = $scope.tvshow.data.seasons[num];

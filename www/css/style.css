@@ -1,5 +1,11 @@
 /* Empty. Add your own CSS if you like */
 
+.row-flex {
+    display: flex; 
+    flex-flow: row wrap; 
+    justify-content: space-around;
+}
+
 p.item-text-wrap {
     overflow: initial;
     white-space: initial;
@@ -22,8 +28,8 @@ img.img-poster-92 {
     width: 92px;
 }
 img.img-poster-154 {
-    max-height: 278px;
-    max-width: 154px;
+    height: 229px;
+    width: 154px;
 }
 img.img-poster-185 {
     max-height: 278px;
@@ -50,4 +56,11 @@ img.img-poster-780 {
 }
 #movie-stream-info {
     width: 100%;
+}
+
+/* TvShow View */
+
+.card-season {
+    width: 154px; 
+    height: 300px;
 }

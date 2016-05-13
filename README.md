@@ -22,11 +22,12 @@ We're almost ready, clone the proyect and add the browser as a platform for the 
 ```bash
 $ git clone https://github.com/Alvaroctal/FocaMedia.git
 $ cd FocaMedia
-$ ionic platform add ionic
+$ ionic platform add ios
 ```
 
 Now, launch the project:
 ```bash
-$ ./FocaMediaClient.sh
+$ ionic emulate ios --target="iPhone-4s"  // Or any other platform
 ```
+
 You'll need to relaunch the project with every change you make.
