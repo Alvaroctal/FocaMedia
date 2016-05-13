@@ -18,7 +18,7 @@ Then, make sure you have google chrome installed and the binary `google-chrome` 
 $ sudo ln -s /usr/bin/google-chrome-stable /usr/bin/google-chrome
 ```
 
-We're almost ready, clone the proyect and add the browser as a platform for the project:
+We're almost ready, clone the proyect and add `ios` or `android` as a platform for the project:
 ```bash
 $ git clone https://github.com/Alvaroctal/FocaMedia.git
 $ cd FocaMedia
@@ -27,7 +27,7 @@ $ ionic platform add ios
 
 Now, launch the project:
 ```bash
-$ ionic emulate ios --target="iPhone-4s"  // Or any other platform
+$ ionic emulate ios --target="iPhone-4s"  ## Or any other platform
 ```
 
 You'll need to relaunch the project with every change you make.

@@ -1,26 +1,31 @@
 <ion-view view-title="{{movie.data.title}}">
   <ion-content>
     <div class="row">
-      <div class="col">
-        <video id="movie-stream-player" controls="controls" preload="metadata" webkit-playsinline="webkit-playsinline" class="videoPlayer">
-          <source src="http://192.168.1.88:5000/video/" type="video/mp4"/>
-        </video>
-      </div>
-    </div>
-    <div class="row">
-      <div id="movie-stream-info" class="card">
-        <div class="item item-text-wrap">
-          <div class="row">
-            <div class="col">
-              <h2>{{movie.data.title}} <small>({{movie.data.release_date}})</small></h2><br />
-              <h4>{{movie.local.size|bytes}}</h4>
-            </div>
-            <div class="col text-right">
-              <button class="button button-small icon-left ion-social-youtube-outline button-assertive" ng-click = "showTrailer(movie.data.videos.results)">Ver trailer</button>
-              <button class="button button-small icon-left ion-ios-plus-outline button-energized" ng-click="addToWatchlist()">Añadir a la watchlist</button>
-            </div>
-          </div>
+
+      <div id="movie-stream-info" class="list card">
+
+        <div class="item item-image">
+          <video id="movie-stream-player" controls="controls" preload="metadata" webkit-playsinline="webkit-playsinline" class="videoPlayer">
+            <source src="http://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"/>
+          </video>
         </div>
+
+        <div class="item">
+          <h2>{{movie.data.title}}</h2>
+          <p>{{movie.data.release_date}}</p>
+          <span>{{movie.local.video}} [{{movie.local.audio}}]</span>
+          <p>{{movie.local.size|bytes}}</p>
+        </div>
+
+        <div class="item item-body">
+          {{movie.data.overview}}
+        </div>
+
+        <div class="item">
+          <button class="button button-small icon-left ion-social-youtube-outline button-assertive" ng-click = "showTrailer(movie.data.videos.results)">Ver trailer</button>
+          <button class="button button-small icon-left ion-ios-plus-outline button-energized" ng-click="addToWatchlist()">Añadir a la watchlist</button>
+        </div>
+        
       </div>
     </div>
   </ion-content>

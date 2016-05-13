@@ -65,7 +65,7 @@ angular.module('starter.controllers', [])
   //  Connection Controller
   //----------------------------------------------------------------------------
 
-  $scope.ip = '127.0.0.1';
+  $scope.ip = '91.121.138.109';
   $scope.port = 14123;
 
   $scope.connect = function(ip, port) {
