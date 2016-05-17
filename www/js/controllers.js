@@ -9,7 +9,7 @@ angular.module('starter.controllers', [])
     connect: function (ip, port, callback) {
       $ionicLoading.show({ content: 'Loading', animation: 'fade-in', showBackdrop: true, maxWidth: 200, showDelay: 0 });
 
-      $http.get('http://' + ip + ':' + port + '/data/index.json').then(
+      $http.get('http://' + ip + ':' + port + '/index').then(
         function(response) {
           address = ip + ':' + port;
           media = response.data.data;
@@ -79,8 +79,8 @@ angular.module('starter.controllers', [])
   //  Connection Controller
   //----------------------------------------------------------------------------
 
-  $scope.ip = 'localhost';
-  $scope.port = 8100;
+  $scope.ip = '127.0.0.1';
+  $scope.port = 14123;
 
   $scope.connect = function(ip, port) {
     MediaService.connect(ip, port, function(err, data) {
