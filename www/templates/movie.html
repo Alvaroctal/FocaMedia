@@ -23,7 +23,7 @@
 
         <div class="item">
           <button class="button button-small icon-left ion-social-youtube-outline button-assertive" ng-click = "showTrailer(movie.data.videos.results)">Ver trailer</button>
-          <button class="button button-small icon-left ion-ios-plus-outline button-energized" ng-click="addToWatchlist()">Añadir a la watchlist</button>
+          <button class="button button-small icon-left {{ movie.watchlist ? 'ion-ios-minus-outline button-royal' : 'ion-ios-plus-outline button-positive' }}" ng-click="watchlist()">Watchlist</button>
         </div>
         
       </div>
