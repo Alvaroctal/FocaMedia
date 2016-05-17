@@ -5,14 +5,21 @@ angular.module('starter.controllers', [])
   var media = [];
 
   return {
-    connect: function (ip, port, callback) {
-
+    connect: function (ip, port, loading, callback) {
+      loading.show({
+        content: 'Loading',
+        animation: 'fade-in',
+        showBackdrop: true,
+        maxWidth: 200,
+        showDelay: 0
+      });
       $http.get('http://' + ip + ':' + port + '/index').then(
         function(response) {
           media = response.data.data;
-
+          loading.hide();
           callback(null, response.data);
         }, function(response) {
+          loading.hide();
           callback(response, null);
         });
 
@@ -69,7 +76,7 @@ angular.module('starter.controllers', [])
   $scope.port = 14123;
 
   $scope.connect = function(ip, port) {
-    MediaService.connect(ip, port, function(err, data) {
+    MediaService.connect(ip, port, $ionicLoading, function(err, data) {
       if (! err) {
         // Connection Success
 
@@ -124,13 +131,37 @@ angular.module('starter.controllers', [])
   //----------------------------------------------------------------------------
   //  Tvshow Controller
   //----------------------------------------------------------------------------
+  var drop = false;
 
   $scope.tvshow = MediaService.getById($stateParams.id);
   $scope.currentSeason = $scope.tvshow.data.seasons[0];
-
   $scope.getSeasonData = function(seasons, season_number) {
     return seasons.filter(function (season) { return season.season_number == season_number })[0];
   }
+
+  $scope.changeSeason = function (num){
+    $scope.currentSeason = $scope.tvshow.data.seasons[num];
+  };
+
+  $scope.showMore = function(){
+    document.getElementById("overview").className = drop ? 'drop' : 'dropDown';
+    drop = !drop;
+  };
+})
+
+.controller('TvshowSeasonCtrl', function($scope, $stateParams, MediaService) {
+
+  //----------------------------------------------------------------------------
+  //  Tvshow Controller
+  //----------------------------------------------------------------------------
+  getSeasonData = function(seasons, season_number) {
+    return seasons.filter(function (season) { return season.season_number == season_number })[0];
+  }
+
+  $scope.tvshow = MediaService.getById($stateParams.id);
+  $scope.seasonNum = $stateParams.season;
+  $scope.season = $scope.tvshow.local.seasons[$stateParams.season];
+  $scope.seasonData = getSeasonData($scope.tvshow.data.seasons, $scope.season.number);
 
   $scope.changeSeason = function (num){
     $scope.currentSeason = $scope.tvshow.data.seasons[num];

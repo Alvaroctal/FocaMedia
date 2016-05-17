@@ -1,0 +1,21 @@
+<ion-view view-title="{{tvshow.data.title}}">
+  <ion-content>
+    <div class="list">
+      <div class="item row">
+        <div class="col col-media">
+          <h2> Temporada {{season.number}}</h2>
+          <img class="img-poster img-poster-92" ng-src="https://image.tmdb.org/t/p/w92{{seasonData.poster_path}}" height="138" width="92">
+          <h3 style="color: #999;">({{tvshow.data.seasons[season.number].air_date}})</h3>
+        </div>
+        <div class="col">
+          <a class="item row" ng-repeat="episode in season.episodes" href="#/app/tvshows/{{tvshow.data.id}}/{{seasonNum}}/{{$index}}">
+            <div class="col">
+              <h3>Episodio {{episode.number}}: {{seasonData.episodes[episode.number].name}}</h3>
+              <span class="sub">({{tvshow.data.seasons[season.number].episodes[episode.number].air_date}})</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

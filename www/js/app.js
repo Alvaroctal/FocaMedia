@@ -90,6 +90,16 @@ angular.module('starter', ['ionic', 'starter.controllers'])
     }
   })
 
+  .state('app.season', {
+    url: '/tvshows/:id/:season',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/tvshowSeason.html',
+        controller: 'TvshowSeasonCtrl'
+      }
+    }
+  })
+
   .state('app.stats', {
     url: '/stats',
     views: {

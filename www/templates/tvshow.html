@@ -1,42 +1,37 @@
 <ion-view view-title="{{tvshow.data.name}}">
   <ion-content>
     <div class="row">
-      <div class="col"> <!-- Y esta ida de olla ? -->
-        <div class="row">
-          <div id="movie-stream-info" class="card">
-            <div class="item item-text-wrap">
-              <div class="row">
-                <div class="col">
-                  <div class="row"> <!-- No en serio, que cojones ?  XD -->
-                    <div class="col">
-                      <img class="img-poster img-poster-185" ng-src="https://image.tmdb.org/t/p/w185{{tvshow.data.poster_path}}" height="auto" width="185">
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col">
-                      <h2>{{tvshow.data.original_name}} <small>({{tvshow.data.first_air_date}})</small></h2>
-                    </div>
-                    <div class="col">
-                      <button class="button button-small icon-left ion-social-youtube-outline button-assertive" ng-click = "showTrailer(tvshow.data.videos.results)">Ver trailer</button>
-                      <button class="button button-small icon-left ion-ios-plus-outline button-energized" ng-click="addToWatchlist()">Añadir a la watchlist</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div class="col">
+        <img class="img-poster img-poster-185" ng-src="https://image.tmdb.org/t/p/w185{{tvshow.data.poster_path}}" height="auto" width="185">
       </div>
     </div>
-    <div class="row row-flex">
-      <div class="list card card-season" ng-repeat="season in tvshow.local.seasons">
+    <div class="row">
+      <div class="col">
+        <p id="overview" class="drop">{{tvshow.data.overview}}</p>
+        <button class="button button-block icon-center button-positive" ng-click="showMore()">Ver Mas</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <h2>
+          {{tvshow.data.original_name}} </br>
+          <small>({{tvshow.data.first_air_date}})</small>
+        </h2>
+      </div>
+      <div class="col">
+        <button class="button button-block icon-left ion-social-youtube-outline button-assertive" ng-click = "showTrailer(tvshow.data.videos.results)">Ver trailer</button>
+        <button class="button button-block icon-left ion-ios-plus-outline button-energized" ng-click="addToWatchlist()">Añadir a la watchlist</button>
+      </div>
+    </div>
+    <div class="row carrousel">
+      <div class="list" ng-repeat="season in tvshow.local.seasons">
         <div class="item">
           <h3>Temporada {{season.number}}</h3>
           <p>{{getSeasonData(tvshow.data.seasons, season.number).air_date || "No emitida"}}</p>
         </div>
 
-        <div class="item item-image">
-          <a href="#/app/tvshows/{{tvshow.data.id}}/{{season.number}}">
+        <div class="item">
+          <a href="#/app/tvshows/{{tvshow.data.id}}/{{$index}}">
             <img class="img-poster img-poster-154" ng-src="https://image.tmdb.org/t/p/w154{{getSeasonData(tvshow.data.seasons, season.number).poster_path}}">
           </a>
         </div>
