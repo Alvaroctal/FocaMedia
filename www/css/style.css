@@ -45,16 +45,21 @@ img.img-poster-780 {
 .drop{
     max-height: 100px;
     overflow-y: hidden !important;
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -ms-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
 }
 
 .dropDown{
     max-height: none;
     overflow-y: visible;
-    -webkit-transition: all 2.5s ease-in-out;
-  -moz-transition: all 2.5s ease-in-out;
-  -ms-transition: all 2.5s ease-in-out;
-  -o-transition: all 2.5s ease-in-out;
-  transition: all 2.5s ease-in-out;
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -ms-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
 }
 
 .sub {
