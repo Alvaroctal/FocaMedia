@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.factory('MediaService', function($q, $http) {
+.factory('MediaService', ['$q', '$http', function($q, $http) {
 
   var media = [];
 
@@ -30,9 +30,9 @@ angular.module('starter.controllers', [])
       return media.filter(function (media) { return media.data.id == id })[0];
     }
   }
-})
+}])
 
-.controller('AppCtrl', function($scope, $ionicModal, $ionicLoading, $timeout, $sce) {
+.controller('AppCtrl', ['$scope', '$ionicModal', '$ionicLoading', '$timeout', '$sce', function($scope, $ionicModal, $ionicLoading, $timeout, $sce) {
 
   //----------------------------------------------------------------------------
   //  Modal Trailer
@@ -62,15 +62,15 @@ angular.module('starter.controllers', [])
       $scope.modalTrailer.show();
     }
   };
-})
+}])
 
-.controller('ConnectionCtrl', function($scope, $location, $ionicPopup, $ionicLoading, $http, MediaService) {
+.controller('ConnectionCtrl', ['$scope', '$location', '$ionicPopup', '$ionicLoading', '$http', 'MediaService', function($scope, $location, $ionicPopup, $ionicLoading, $http, MediaService) {
 
   //----------------------------------------------------------------------------
   //  Connection Controller
   //----------------------------------------------------------------------------
 
-  $scope.ip = '91.121.138.109';
+  $scope.ip = '127.0.0.1';
   $scope.port = 14123;
 
   $scope.connect = function(ip, port) {
@@ -90,9 +90,9 @@ angular.module('starter.controllers', [])
       }
     });
   }
-})
+}])
 
-.controller('MoviesListCtrl', function($scope, MediaService) {
+.controller('MoviesListCtrl', ['$scope', 'MediaService', function($scope, MediaService) {
 
   //----------------------------------------------------------------------------
   //  Movies Controller
@@ -102,9 +102,9 @@ angular.module('starter.controllers', [])
 
   $scope.showSearch = false;
   $scope.toggleSearch = function() { $scope.showSearch = !$scope.showSearch }
-})
+}])
 
-.controller('TvshowsListCtrl', function($scope, MediaService) {
+.controller('TvshowsListCtrl', ['$scope', 'MediaService', function($scope, MediaService) {
 
   //----------------------------------------------------------------------------
   //  Tvshows Controller
@@ -113,23 +113,24 @@ angular.module('starter.controllers', [])
   $scope.tvshows = MediaService.getMedia('tvshow');
   $scope.showSearch = false;
   $scope.toggleSearch = function() { $scope.showSearch = !$scope.showSearch }
-})
+}])
 
-.controller('MovieCtrl', function($scope, $stateParams, MediaService) {
+.controller('MovieCtrl', ['$scope', '$stateParams', 'MediaService', function($scope, $stateParams, MediaService) {
 
   //----------------------------------------------------------------------------
   //  Movie Controller
   //----------------------------------------------------------------------------
 
   $scope.movie = MediaService.getById($stateParams.id);
-})
+}])
 
-.controller('TvshowCtrl', function($scope, $stateParams, MediaService) {
+.controller('TvshowCtrl', ['$scope', '$stateParams', 'MediaService', function($scope, $stateParams, MediaService) {
 
   //----------------------------------------------------------------------------
   //  Tvshow Controller
   //----------------------------------------------------------------------------
-  var drop = false;
+  
+  $scope.dropStatus = null;
 
   $scope.tvshow = MediaService.getById($stateParams.id);
   $scope.currentSeason = $scope.tvshow.data.seasons[0];
@@ -141,13 +142,10 @@ angular.module('starter.controllers', [])
     $scope.currentSeason = $scope.tvshow.data.seasons[num];
   };
 
-  $scope.showMore = function(){
-    document.getElementById("overview").className = drop ? 'drop' : 'dropDown';
-    drop = !drop;
-  };
-})
+  $scope.showMore = function() { $scope.dropStatus = $scope.dropStatus ? null : 'down' };
+}])
 
-.controller('TvshowSeasonCtrl', function($scope, $stateParams, MediaService) {
+.controller('TvshowSeasonCtrl', ['$scope', '$stateParams', 'MediaService', function($scope, $stateParams, MediaService) {
 
   //----------------------------------------------------------------------------
   //  Tvshow Controller
@@ -164,9 +162,9 @@ angular.module('starter.controllers', [])
   $scope.changeSeason = function (num){
     $scope.currentSeason = $scope.tvshow.data.seasons[num];
   };
-})
+}])
 
-.controller('StatsCtrl', function($scope, $stateParams, MediaService) {
+.controller('StatsCtrl', ['$scope', 'MediaService', function($scope, MediaService) {
 
   //----------------------------------------------------------------------------
   //  Stats Controller
@@ -227,12 +225,12 @@ angular.module('starter.controllers', [])
     var total = 0;
     for ( var i = 0, _leni = $scope.tvshows.length; i < _leni; i++ ) {
       for ( var j = 0, _lenj = $scope.tvshows[i]['data']['seasons'].length; j < _lenj; j++ ) {
-        total += $scope.tvshows[i]['data']['seasons'][j]['episodes'].length * $scope.tvshows[i]['data']['episode_run_time'][0]
+        total += $scope.tvshows[i]['data']['seasons'][j]['episodes'].length * $scope.tvshows[i]['data']['episode_run_time'][0];
       }
     }
     return Math.floor(total / 60);
   }
-})
+}])
 
 .filter('bytes', function() {
   return function(bytes, precision) {
