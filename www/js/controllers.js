@@ -1,33 +1,42 @@
 angular.module('starter.controllers', [])
 
-.factory('MediaService', ['$q', '$http', function($q, $http) {
+.factory('MediaService', ['$q', '$http', '$ionicLoading', function($q, $http, $ionicLoading) {
 
   var media = [];
+  var address = null;
 
   return {
-    connect: function (ip, port, loading, callback) {
-      loading.show({
-        content: 'Loading',
-        animation: 'fade-in',
-        showBackdrop: true,
-        maxWidth: 200,
-        showDelay: 0
-      });
+    connect: function (ip, port, callback) {
+      $ionicLoading.show({ content: 'Loading', animation: 'fade-in', showBackdrop: true, maxWidth: 200, showDelay: 0 });
+
       $http.get('http://' + ip + ':' + port + '/index').then(
         function(response) {
+          address = ip + ':' + port;
           media = response.data.data;
-          loading.hide();
+          $ionicLoading.hide();
           callback(null, response.data);
         }, function(response) {
-          loading.hide();
+          $ionicLoading.hide();
           callback(response, null);
         });
     },
     getMedia: function(type) {
       return type ? media.filter(function (media) { return media.type == type && typeof(media.data) == 'object'}) : media;
     },
-    getById: function(id){
+    getById: function(id) {
       return media.filter(function (media) { return media.data.id == id })[0];
+    },
+    watchlist: function(media_type, media_id, watchlist, callback) {
+      $ionicLoading.show({ content: 'Loading', animation: 'fade-in', showBackdrop: true, maxWidth: 200, showDelay: 0 });
+
+      $http.post('http://' + address + '/watchlist', { "media_type": media_type, "media_id": media_id, "watchlist": watchlist}).then(function(response) {
+        console.log(response);
+        $ionicLoading.hide();
+        callback(null, response);
+      }, function(response) {
+        $ionicLoading.hide();
+        callback(response, null);
+      });
     }
   }
 }])
@@ -74,7 +83,7 @@ angular.module('starter.controllers', [])
   $scope.port = 14123;
 
   $scope.connect = function(ip, port) {
-    MediaService.connect(ip, port, $ionicLoading, function(err, data) {
+    MediaService.connect(ip, port, function(err, data) {
       if (! err) {
         // Connection Success
 
@@ -122,6 +131,16 @@ angular.module('starter.controllers', [])
   //----------------------------------------------------------------------------
 
   $scope.movie = MediaService.getById($stateParams.id);
+
+  $scope.watchlist = function() {
+    MediaService.watchlist('movie', $scope.movie.data.id, $scope.movie.watchlist, function(err, data) {
+      if (!err) {
+        $scope.movie.watchlist = $scope.movie.watchlist ? false : true;
+      } else {
+        console.log(err);
+      }
+    });
+  }
 }])
 
 .controller('TvshowCtrl', ['$scope', '$stateParams', 'MediaService', function($scope, $stateParams, MediaService) {
@@ -138,9 +157,15 @@ angular.module('starter.controllers', [])
     return seasons.filter(function (season) { return season.season_number == season_number })[0];
   }
 
-  $scope.changeSeason = function (num){
-    $scope.currentSeason = $scope.tvshow.data.seasons[num];
-  };
+  $scope.watchlist = function() {
+    MediaService.watchlist('tv', $scope.tvshow.data.id, $scope.tvshow.watchlist, function(err, data) {
+      if (!err) {
+        $scope.tvshow.watchlist = $scope.tvshow.watchlist ? false : true;
+      } else {
+        console.log(err);
+      }
+    });
+  }
 
   $scope.showMore = function() { $scope.dropStatus = $scope.dropStatus ? null : 'down' };
 }])
