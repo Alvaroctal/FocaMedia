@@ -22,8 +22,6 @@ angular.module('starter.controllers', [])
           loading.hide();
           callback(response, null);
         });
-
-      return media.promise;
     },
     getMedia: function(type) {
       return type ? media.filter(function (media) { return media.type == type && typeof(media.data) == 'object'}) : media;

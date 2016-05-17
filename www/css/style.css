@@ -22,9 +22,8 @@ img.img-poster-92 {
     width: 92px;
 }
 img.img-poster-154 {
-    height: 170px;
-    width: 115px;
-    vertical-align: middle;
+    height: 229px;
+    width: 154px;
 }
 img.img-poster-185 {
     max-height: 278px;
@@ -58,19 +57,28 @@ img.img-poster-780 {
   transition: all 2.5s ease-in-out;
 }
 
-.sub{
+.sub {
     color: #999;
     font-size: 10px;
     text-align: right;
 }
 
-.carrousel{
-    overflow-x: scroll;
+ion-scroll {
     background-color: #333;
-    padding-right: 2vw;
 }
-.carrousel .list{
-    margin: 2vh 2vw 2vh 2vw;
+
+#carroulsel-seasons {
+    margin: 8px;
+    width: -webkit-max-content;
+    width: max-content;
+}
+
+#carroulsel-seasons > .season-item {
+    padding-right: 8px;
+    display: block;
+    float: left;
+    width: 154px; 
+    height: 300px;
 }
 /* Movie View */
 
