@@ -1,0 +1,21 @@
+<ion-view view-title="{{tvshow.data.name}}">
+  <ion-content>
+    <div class="row">
+
+      <div id="movie-stream-info" class="list card">
+
+        <div class="item item-image">
+          <video id="movie-stream-player" controls="controls" preload="metadata" webkit-playsinline="webkit-playsinline" class="videoPlayer">
+            <source src="http://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"/>
+          </video>
+        </div>
+
+        <div class="item">
+          <h2>{{episode.name}}</h2>
+          <p>{{episodeData.air_date}}</p>      
+          <p>{{episode.size|bytes}}</p>
+        </div>      
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

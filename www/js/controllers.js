@@ -70,7 +70,7 @@ angular.module('starter.controllers', [])
   //  Connection Controller
   //----------------------------------------------------------------------------
 
-  $scope.ip = '91.121.138.109';
+  $scope.ip = '127.0.0.1';
   $scope.port = 14123;
 
   $scope.connect = function(ip, port) {
@@ -122,6 +122,7 @@ angular.module('starter.controllers', [])
   //----------------------------------------------------------------------------
 
   $scope.movie = MediaService.getById($stateParams.id);
+  console.log($scope.movie);
 })
 
 .controller('TvshowCtrl', function($scope, $stateParams, MediaService) {
@@ -160,10 +161,22 @@ angular.module('starter.controllers', [])
   $scope.seasonNum = $stateParams.season;
   $scope.season = $scope.tvshow.local.seasons[$stateParams.season];
   $scope.seasonData = getSeasonData($scope.tvshow.data.seasons, $scope.season.number);
+})
 
-  $scope.changeSeason = function (num){
-    $scope.currentSeason = $scope.tvshow.data.seasons[num];
-  };
+.controller('TvshowEpisodeCtrl', function($scope, $stateParams, MediaService) {
+
+  //----------------------------------------------------------------------------
+  //  Movie Controller
+  //----------------------------------------------------------------------------
+
+  getEpisodeData = function(episodes, episode_number) {
+    return episodes.filter(function (episode) { return episode.episode_number == episode_number })[0];
+  }
+
+  $scope.tvshow = MediaService.getById($stateParams.id);
+  $scope.episode = $scope.tvshow.local.seasons[$stateParams.season].episodes[$stateParams.episode];
+  $scope.episodeData = getEpisodeData($scope.tvshow.data.seasons[$scope.episode.season].episodes, $scope.episode.number);
+  console.log($scope.tvshow);
 })
 
 .controller('StatsCtrl', function($scope, $stateParams, MediaService) {
