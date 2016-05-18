@@ -1,0 +1,27 @@
+{
+  "name": "FocaMedia",
+  "homepage": "https://github.com/Alvaroctal/FocaMedia",
+  "authors": [
+    "Alvaro Octal"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "www/lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "videogular-buffering": "^1.4.3",
+    "videogular-controls": "^1.4.3",
+    "videogular-overlay-play": "^1.4.3",
+    "videogular-poster": "^1.4.3",
+    "videogular-themes-default": "^1.4.3",
+    "videogular": "^1.4.3"
+  }
+}

@@ -20,7 +20,7 @@
       </div>
       <div class="col">
         <button class="button button-block icon-left ion-social-youtube-outline button-assertive" ng-click = "showTrailer(tvshow.data.videos.results)">Ver trailer</button>
-        <button class="button button-block icon-left {{ tvshow.watchlist ? 'ion-ios-minus-outline button-royal' : 'ion-ios-plus-outline button-positive' }}" ng-click="watchlist()">Watchlist</button>
+        <button class="button button-block icon-left {{ tvshow.watchlist ? 'ion-ios-minus-outline button-royal' : 'ion-ios-plus-outline button-positive' }}" ng-disabled="watchlistWorking" ng-click="watchlist()">Watchlist</button>
       </div>
     </div>
     <ion-scroll direction="x">

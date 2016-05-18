@@ -1,4 +1,4 @@
-angular.module('starter.controllers', [])
+angular.module('starter.controllers', ['ngSanitize', 'com.2fdevs.videogular', 'com.2fdevs.videogular.plugins.controls', 'com.2fdevs.videogular.plugins.overlayplay', 'com.2fdevs.videogular.plugins.poster'])
 
 .factory('MediaService', ['$q', '$http', '$ionicLoading', function($q, $http, $ionicLoading) {
 
@@ -30,13 +30,16 @@ angular.module('starter.controllers', [])
       $ionicLoading.show({ content: 'Loading', animation: 'fade-in', showBackdrop: true, maxWidth: 200, showDelay: 0 });
 
       $http.post('http://' + address + '/watchlist', { "media_type": media_type, "media_id": media_id, "watchlist": watchlist}).then(function(response) {
-        console.log(response);
         $ionicLoading.hide();
-        callback(null, response);
+        if (response.data.data) callback(null, response);
+        else callback(response, null);
       }, function(response) {
         $ionicLoading.hide();
         callback(response, null);
       });
+    },
+    getAddress: function() {
+      return address;
     }
   }
 }])
@@ -87,7 +90,7 @@ angular.module('starter.controllers', [])
       if (! err) {
         // Connection Success
 
-        $location.path('/app/tvshows');
+        $location.path('/app/movies');
       }
       else {
         // Connection Error
@@ -130,14 +133,18 @@ angular.module('starter.controllers', [])
   //  Movie Controller
   //----------------------------------------------------------------------------
 
+  $scope.watchlistWorking = false;
   $scope.movie = MediaService.getById($stateParams.id);
   $scope.watchlist = function() {
-    MediaService.watchlist('movie', $scope.movie.data.id, $scope.movie.watchlist, function(err, data) {
+    var watchlist = $scope.movie.watchlist ? false : true;
+    $scope.watchlistWorking = true;
+    MediaService.watchlist('movie', $scope.movie.data.id, watchlist, function(err, data) {
       if (!err) {
-        $scope.movie.watchlist = $scope.movie.watchlist ? false : true;
+        $scope.movie.watchlist = watchlist;
       } else {
         console.log(err);
       }
+      $scope.watchlistWorking = false;
     });
   }
 }])
@@ -149,20 +156,23 @@ angular.module('starter.controllers', [])
   //----------------------------------------------------------------------------
   
   $scope.dropStatus = null;
-
+  $scope.watchlistWorking = false;
   $scope.tvshow = MediaService.getById($stateParams.id);
-  $scope.currentSeason = $scope.tvshow.data.seasons[0];
+  
   $scope.getSeasonData = function(seasons, season_number) {
     return seasons.filter(function (season) { return season.season_number == season_number })[0];
   }
 
   $scope.watchlist = function() {
-    MediaService.watchlist('tv', $scope.tvshow.data.id, $scope.tvshow.watchlist, function(err, data) {
+    var watchlist = $scope.tvshow.watchlist ? false : true;
+    $scope.watchlistWorking = true;
+    MediaService.watchlist('tv', $scope.tvshow.data.id, watchlist, function(err, data) {
       if (!err) {
-        $scope.tvshow.watchlist = $scope.tvshow.watchlist ? false : true;
+        $scope.tvshow.watchlist = watchlist;
       } else {
         console.log(err);
       }
+      $scope.watchlistWorking = false;
     });
   }
 
@@ -265,6 +275,25 @@ angular.module('starter.controllers', [])
     }
     return Math.floor(total / 60);
   }
+}])
+
+.controller('PlayerController', ['$scope', '$sce', '$location', '$stateParams', '$http', '$timeout', 'MediaService', function ($scope, $sce, $location, $stateParams, $http, $timeout, MediaService) {
+  
+  var controller = this;
+
+  controller.config = {
+    isLive: true,
+    sources: [
+      {src: $sce.trustAsResourceUrl('http://' + MediaService.getAddress() + '/mirror/watch/' + $stateParams.id + '.mp4'), type: "video/mp4"}
+    ],
+    theme: "bower_components/videogular-themes-default/videogular.css",
+    plugins: {
+      poster: "https://image.tmdb.org/t/p/w780" + $scope.$parent.movie.data.backdrop_path
+    }
+  };
+  controller.onPlayerReady = function(API) {
+    controller.API = API;
+  };
 }])
 
 .filter('bytes', function() {
