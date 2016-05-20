@@ -182,8 +182,9 @@ angular.module('starter.controllers', ['ngSanitize', 'com.2fdevs.videogular', 'c
 .controller('TvshowSeasonCtrl', ['$scope', '$stateParams', 'MediaService', function($scope, $stateParams, MediaService) {
 
   //----------------------------------------------------------------------------
-  //  Tvshow Controller
+  //  Season Controller
   //----------------------------------------------------------------------------
+  
   getSeasonData = function(seasons, season_number) {
     return seasons.filter(function (season) { return season.season_number == season_number })[0];
   }
@@ -197,7 +198,7 @@ angular.module('starter.controllers', ['ngSanitize', 'com.2fdevs.videogular', 'c
 .controller('TvshowEpisodeCtrl', ['$scope', '$stateParams', 'MediaService', function($scope, $stateParams, MediaService) {
 
   //----------------------------------------------------------------------------
-  //  Movie Controller
+  //  Episode Controller
   //----------------------------------------------------------------------------
 
   getEpisodeData = function(episodes, episode_number) {
@@ -280,15 +281,18 @@ angular.module('starter.controllers', ['ngSanitize', 'com.2fdevs.videogular', 'c
 .controller('PlayerController', ['$scope', '$sce', '$location', '$stateParams', '$http', '$timeout', 'MediaService', function ($scope, $sce, $location, $stateParams, $http, $timeout, MediaService) {
   
   var controller = this;
+  var url = 'http://' + MediaService.getAddress() + '/mirror/watch/' + ($scope.$parent.movie ? 'movie-' + $stateParams.id : 'tvshow-' + $stateParams.id + '-' + $stateParams.season + '-' + $stateParams.episode);
+
+  console.log(url);
 
   controller.config = {
     isLive: true,
     sources: [
-      {src: $sce.trustAsResourceUrl('http://' + MediaService.getAddress() + '/mirror/watch/' + $stateParams.id + '.mp4'), type: "video/mp4"}
+      {src: $sce.trustAsResourceUrl(url + '.mp4'), type: "video/mp4"}
     ],
-    theme: "bower_components/videogular-themes-default/videogular.css",
+    theme: "www/lib/videogular-themes-default/videogular.css",
     plugins: {
-      poster: "https://image.tmdb.org/t/p/w780" + $scope.$parent.movie.data.backdrop_path
+      poster: "https://image.tmdb.org/t/p/w780" + ($scope.$parent.movie ? $scope.$parent.movie.data.backdrop_path : ($scope.$parent.episodeData.still_path ? $scope.$parent.episodeData.still_path : $scope.$parent.tvshow.data.backdrop_path))
     }
   };
   controller.onPlayerReady = function(API) {

@@ -5,13 +5,6 @@ p.item-text-wrap {
     white-space: initial;
 }
 
-div.col.col-media {
-    -webkit-flex: unset;
-    -moz-box-flex: unset;
-    -moz-flex: unset;
-    -ms-flex: unset;
-    width: unset;
-}
 img.img-poster {
     width: 100%;
     height: auto;
@@ -45,12 +38,6 @@ img.img-poster-780 {
 .drop {
     max-height: 100px;
     overflow-y: hidden !important;
-    /* Hace cosas raras en ios */
-    /*-webkit-transition: max-height 0.2s ease-in-out;
-    -moz-transition: max-height 0.2s ease-in-out;
-    -ms-transition: max-height 0.2s ease-in-out;
-    -o-transition: max-height 0.2s ease-in-out;
-    transition: max-height 0.2s ease-in-out;*/
 }
 
 .drop.down {
@@ -80,13 +67,9 @@ ion-scroll {
     width: 154px; 
     height: 300px;
 }
-/* Movie View */
+/* Player View */
 
-#movie-stream-player {
-    width: 100%;
-    height: 100%;
-}
-#movie-stream-info {
+#card-player {
     width: 100%;
 }
 
