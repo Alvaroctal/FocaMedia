@@ -82,13 +82,17 @@ angular.module('starter.controllers', ['ngSanitize', 'com.2fdevs.videogular', 'c
   //  Connection Controller
   //----------------------------------------------------------------------------
 
-  $scope.ip = '127.0.0.1';
-  $scope.port = 14123;
+  $scope.ip = localStorage.getItem("ip");
+  $scope.port = localStorage.getItem("port");
 
   $scope.connect = function(ip, port) {
     MediaService.connect(ip, port, function(err, data) {
       if (! err) {
         // Connection Success
+
+        //Save last configuration
+        localStorage.setItem("ip", ip);
+        localStorage.setItem("port", port);
 
         $location.path('/app/movies');
       }
@@ -154,11 +158,11 @@ angular.module('starter.controllers', ['ngSanitize', 'com.2fdevs.videogular', 'c
   //----------------------------------------------------------------------------
   //  Tvshow Controller
   //----------------------------------------------------------------------------
-  
+
   $scope.dropStatus = null;
   $scope.watchlistWorking = false;
   $scope.tvshow = MediaService.getById($stateParams.id);
-  
+
   $scope.getSeasonData = function(seasons, season_number) {
     return seasons.filter(function (season) { return season.season_number == season_number })[0];
   }
@@ -184,7 +188,7 @@ angular.module('starter.controllers', ['ngSanitize', 'com.2fdevs.videogular', 'c
   //----------------------------------------------------------------------------
   //  Season Controller
   //----------------------------------------------------------------------------
-  
+
   getSeasonData = function(seasons, season_number) {
     return seasons.filter(function (season) { return season.season_number == season_number })[0];
   }
@@ -279,7 +283,7 @@ angular.module('starter.controllers', ['ngSanitize', 'com.2fdevs.videogular', 'c
 }])
 
 .controller('PlayerController', ['$scope', '$sce', '$location', '$stateParams', '$http', '$timeout', 'MediaService', function ($scope, $sce, $location, $stateParams, $http, $timeout, MediaService) {
-  
+
   var controller = this;
   var url = 'http://' + MediaService.getAddress() + '/mirror/watch/' + ($scope.$parent.movie ? 'movie-' + $stateParams.id : 'tvshow-' + $stateParams.id + '-' + $stateParams.season + '-' + $stateParams.episode);
 
