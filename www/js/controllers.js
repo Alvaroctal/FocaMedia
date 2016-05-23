@@ -115,9 +115,19 @@ angular.module('starter.controllers', ['ngSanitize', 'com.2fdevs.videogular', 'c
   //----------------------------------------------------------------------------
 
   $scope.movies = MediaService.getMedia('movie');
+  $scope.search = new Object();
 
   $scope.showSearch = false;
-  $scope.toggleSearch = function() { $scope.showSearch = !$scope.showSearch }
+  $scope.showWatchList = false;
+  
+  $scope.toggleSearch = function() { $scope.showSearch = !$scope.showSearch;};
+  $scope.filterWatchList = function(search){ 
+    $scope.showWatchList = !$scope.showWatchList;
+    if($scope.showWatchList)
+      search.watchlist = true;
+    else
+      delete search.watchlist;
+  }
 }])
 
 .controller('TvshowsListCtrl', ['$scope', 'MediaService', function($scope, MediaService) {
@@ -127,8 +137,19 @@ angular.module('starter.controllers', ['ngSanitize', 'com.2fdevs.videogular', 'c
   //----------------------------------------------------------------------------
 
   $scope.tvshows = MediaService.getMedia('tvshow');
+  $scope.search = new Object();
+
   $scope.showSearch = false;
+  $scope.showWatchList = false;
+  
   $scope.toggleSearch = function() { $scope.showSearch = !$scope.showSearch }
+  $scope.filterWatchList = function(search){ 
+    $scope.showWatchList = !$scope.showWatchList;
+    if($scope.showWatchList)
+      search.watchlist = true;
+    else
+      delete search.watchlist;
+  }
 }])
 
 .controller('MovieCtrl', ['$scope', '$stateParams', 'MediaService', function($scope, $stateParams, MediaService) {
