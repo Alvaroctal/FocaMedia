@@ -10,6 +10,7 @@
   <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
   </ion-nav-buttons>
   <ion-nav-buttons side="right">
+    <a data-tap-disabled="true" class="button button-icon icon positive" ng-click="filterWatchList()" ng-class="{'ion-ios-list-outline':!showWatchList,'ion-ios-list':showWatchList}" ></a>
     <a data-tap-disabled="true" class="button button-icon icon positive" ng-click="toggleSearch()" ng-class="{'ion-ios-search':!showSearch,'ion-ios-close-outline':showSearch}"></a>
   </ion-nav-buttons>
   <ion-content>

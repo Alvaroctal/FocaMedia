@@ -119,14 +119,14 @@ angular.module('starter.controllers', ['ngSanitize', 'com.2fdevs.videogular', 'c
 
   $scope.showSearch = false;
   $scope.showWatchList = false;
-  
+
   $scope.toggleSearch = function() { $scope.showSearch = !$scope.showSearch;};
-  $scope.filterWatchList = function(search){ 
+  $scope.filterWatchList = function(){ 
     $scope.showWatchList = !$scope.showWatchList;
     if($scope.showWatchList)
-      search.watchlist = true;
+      $scope.search.watchlist = true;
     else
-      delete search.watchlist;
+      delete $scope.search.watchlist;
   }
 }])
 
@@ -143,12 +143,12 @@ angular.module('starter.controllers', ['ngSanitize', 'com.2fdevs.videogular', 'c
   $scope.showWatchList = false;
   
   $scope.toggleSearch = function() { $scope.showSearch = !$scope.showSearch }
-  $scope.filterWatchList = function(search){ 
+  $scope.filterWatchList = function(){ 
     $scope.showWatchList = !$scope.showWatchList;
     if($scope.showWatchList)
-      search.watchlist = true;
+      $scope.search.watchlist = true;
     else
-      delete search.watchlist;
+      delete $scope.search.watchlist;
   }
 }])
 
