@@ -44,7 +44,7 @@ angular.module('starter.controllers', ['ngSanitize', 'com.2fdevs.videogular', 'c
   }
 }])
 
-.controller('AppCtrl', ['$scope', '$ionicModal', '$ionicLoading', '$timeout', '$sce', function($scope, $ionicModal, $ionicLoading, $timeout, $sce) {
+.controller('AppCtrl', ['$scope', '$ionicModal', '$ionicLoading', '$timeout', '$sce', 'MediaService', function($scope, $ionicModal, $ionicLoading, $timeout, $sce, MediaService) {
 
   //----------------------------------------------------------------------------
   //  Modal Trailer
@@ -110,6 +110,8 @@ angular.module('starter.controllers', ['ngSanitize', 'com.2fdevs.videogular', 'c
 
 .controller('MoviesListCtrl', ['$scope', 'MediaService', function($scope, MediaService) {
 
+  $scope.mirrorURL = 'http://' + MediaService.getAddress() + '/mirror';
+
   //----------------------------------------------------------------------------
   //  Movies Controller
   //----------------------------------------------------------------------------
@@ -131,6 +133,8 @@ angular.module('starter.controllers', ['ngSanitize', 'com.2fdevs.videogular', 'c
 }])
 
 .controller('TvshowsListCtrl', ['$scope', 'MediaService', function($scope, MediaService) {
+
+  $scope.mirrorURL = 'http://' + MediaService.getAddress() + '/mirror';
 
   //----------------------------------------------------------------------------
   //  Tvshows Controller
@@ -154,6 +158,8 @@ angular.module('starter.controllers', ['ngSanitize', 'com.2fdevs.videogular', 'c
 
 .controller('MovieCtrl', ['$scope', '$stateParams', 'MediaService', function($scope, $stateParams, MediaService) {
 
+  $scope.mirrorURL = 'http://' + MediaService.getAddress() + '/mirror';
+
   //----------------------------------------------------------------------------
   //  Movie Controller
   //----------------------------------------------------------------------------
@@ -175,6 +181,8 @@ angular.module('starter.controllers', ['ngSanitize', 'com.2fdevs.videogular', 'c
 }])
 
 .controller('TvshowCtrl', ['$scope', '$stateParams', 'MediaService', function($scope, $stateParams, MediaService) {
+
+  $scope.mirrorURL = 'http://' + MediaService.getAddress() + '/mirror';
 
   //----------------------------------------------------------------------------
   //  Tvshow Controller
@@ -206,6 +214,8 @@ angular.module('starter.controllers', ['ngSanitize', 'com.2fdevs.videogular', 'c
 
 .controller('TvshowSeasonCtrl', ['$scope', '$stateParams', 'MediaService', function($scope, $stateParams, MediaService) {
 
+  $scope.mirrorURL = 'http://' + MediaService.getAddress() + '/mirror';
+
   //----------------------------------------------------------------------------
   //  Season Controller
   //----------------------------------------------------------------------------
@@ -227,6 +237,8 @@ angular.module('starter.controllers', ['ngSanitize', 'com.2fdevs.videogular', 'c
 }])
 
 .controller('StatsCtrl', ['$scope', 'MediaService', function($scope, MediaService) {
+
+  $scope.mirrorURL = 'http://' + MediaService.getAddress() + '/mirror';
 
   //----------------------------------------------------------------------------
   //  Stats Controller
@@ -296,6 +308,8 @@ angular.module('starter.controllers', ['ngSanitize', 'com.2fdevs.videogular', 'c
 
 .controller('PlayerController', ['$scope', '$sce', '$location', '$stateParams', '$http', '$timeout', 'MediaService', function ($scope, $sce, $location, $stateParams, $http, $timeout, MediaService) {
 
+  $scope.mirrorURL = 'http://' + MediaService.getAddress() + '/mirror';
+
   var controller = this;
   var url = 'http://' + MediaService.getAddress() + '/mirror/watch/' + ($scope.$parent.movie ? 'movie-' + $stateParams.id : 'tvshow-' + $stateParams.id + '-' + $stateParams.season + '-' + $stateParams.episode);
 
@@ -308,7 +322,7 @@ angular.module('starter.controllers', ['ngSanitize', 'com.2fdevs.videogular', 'c
     ],
     theme: "www/lib/videogular-themes-default/videogular.css",
     plugins: {
-      poster: "https://image.tmdb.org/t/p/w780" + ($scope.$parent.movie ? $scope.$parent.movie.data.backdrop_path : ($scope.$parent.episodeData.still_path ? $scope.$parent.episodeData.still_path : $scope.$parent.tvshow.data.backdrop_path))
+      poster: "http://" + MediaService.getAddress() + "/mirror/t/p/w780" + ($scope.$parent.movie ? $scope.$parent.movie.data.backdrop_path : ($scope.$parent.episodeData.still_path ? $scope.$parent.episodeData.still_path : $scope.$parent.tvshow.data.backdrop_path))
     }
   };
   controller.onPlayerReady = function(API) {

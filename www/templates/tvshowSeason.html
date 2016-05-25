@@ -4,7 +4,7 @@
       <div class="item row">
         <div class="col col-media">
           <h2> Temporada {{season.number}}</h2>
-          <img class="img-poster img-poster-92" ng-src="https://image.tmdb.org/t/p/w92{{seasonData.poster_path}}" height="138" width="92">
+          <img class="img-poster img-poster-92" ng-src="{{mirrorURL}}/t/p/w92{{seasonData.poster_path}}" height="138" width="92">
           <h3 style="color: #999;">({{seasonData.air_date}})</h3>
         </div>
         <div class="col">
