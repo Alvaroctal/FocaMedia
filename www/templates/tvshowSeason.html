@@ -8,10 +8,10 @@
           <h3 style="color: #999;">({{seasonData.air_date}})</h3>
         </div>
         <div class="col">
-          <a class="item row" ng-repeat="episode in season.episodes" href="#/app/tvshows/{{tvshow.data.id}}/{{seasonNum}}/{{$index}}">
+          <a class="item row" ng-repeat="episode in season.episodes" href="#/app/tvshows/{{tvshow.data.id}}/{{season.number}}/{{episode.number}}">
             <div class="col">
               <h3>Episodio {{episode.number}}: {{episode.name}}</h3>
-              <span class="sub">({{seasonData.episodes[episode.number].air_date}})</span>
+              <span class="sub">({{seasonData.episodes[episode.number].air_date || "No emitido"}})</span>
             </div>
           </a>
         </div>

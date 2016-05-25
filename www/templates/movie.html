@@ -6,7 +6,7 @@
 
         <div class="item item-image" ng-controller="PlayerController as controller">
           <div class="videogular-container">
-            <videogular vg-player-ready="controller.onPlayerReady($API)" vg-theme="controller.config.theme">
+            <videogular vg-player-ready="controller.onPlayerReady($API)" vg-complete="controller.onComplete()" vg-theme="controller.config.theme">
               <vg-media vg-src="controller.config.sources"></vg-media>
 
               <vg-controls>
@@ -15,8 +15,7 @@
                 <vg-scrub-bar>
                   <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
                 </vg-scrub-bar>
-                <vg-time-display ng-show="isLive">LIVE</vg-time-display>
-                <vg-time-display ng-show="!isLive">{{ timeLeft | date:'mm:ss' }}</vg-time-display>
+                <vg-time-display>LIVE</vg-time-display>
                 <vg-volume>
                   <vg-mute-button></vg-mute-button>
                   <vg-volume-bar></vg-volume-bar>

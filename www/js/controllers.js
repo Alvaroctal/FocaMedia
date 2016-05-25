@@ -1,4 +1,4 @@
-angular.module('starter.controllers', ['ngSanitize', 'com.2fdevs.videogular', 'com.2fdevs.videogular.plugins.controls', 'com.2fdevs.videogular.plugins.overlayplay', 'com.2fdevs.videogular.plugins.poster'])
+angular.module('starter.controllers', ['ngSanitize', 'com.2fdevs.videogular', 'com.2fdevs.videogular.plugins.controls', 'com.2fdevs.videogular.plugins.overlayplay', 'com.2fdevs.videogular.plugins.poster', 'com.2fdevs.videogular.plugins.buffering'])
 
 .factory('MediaService', ['$q', '$http', '$ionicLoading', function($q, $http, $ionicLoading) {
 
@@ -210,14 +210,9 @@ angular.module('starter.controllers', ['ngSanitize', 'com.2fdevs.videogular', 'c
   //  Season Controller
   //----------------------------------------------------------------------------
 
-  getSeasonData = function(seasons, season_number) {
-    return seasons.filter(function (season) { return season.season_number == season_number })[0];
-  }
-
   $scope.tvshow = MediaService.getById($stateParams.id);
-  $scope.seasonNum = $stateParams.season;
-  $scope.season = $scope.tvshow.local.seasons[$stateParams.season];
-  $scope.seasonData = getSeasonData($scope.tvshow.data.seasons, $scope.season.number);
+  $scope.season = $scope.tvshow.local.seasons.find(function(season) { return season.number == $stateParams.season})
+  $scope.seasonData = $scope.tvshow.data.seasons.find(function(season) { return season.season_number == $stateParams.season})
 }])
 
 .controller('TvshowEpisodeCtrl', ['$scope', '$stateParams', 'MediaService', function($scope, $stateParams, MediaService) {
@@ -226,13 +221,9 @@ angular.module('starter.controllers', ['ngSanitize', 'com.2fdevs.videogular', 'c
   //  Episode Controller
   //----------------------------------------------------------------------------
 
-  getEpisodeData = function(episodes, episode_number) {
-    return episodes.filter(function (episode) { return episode.episode_number == episode_number })[0];
-  }
-
   $scope.tvshow = MediaService.getById($stateParams.id);
-  $scope.episode = $scope.tvshow.local.seasons[$stateParams.season].episodes[$stateParams.episode];
-  $scope.episodeData = getEpisodeData($scope.tvshow.data.seasons[$scope.episode.season].episodes, $scope.episode.number);
+  $scope.episode = $scope.tvshow.local.seasons.find(function(season) { return season.number == $stateParams.season}).episodes.find(function(episode) { return episode.number == $stateParams.episode})
+  $scope.episodeData = $scope.tvshow.data.seasons.find(function(season) { return season.season_number == $stateParams.season}).episodes.find(function(episode) { return episode.episode_number == $stateParams.episode})
 }])
 
 .controller('StatsCtrl', ['$scope', 'MediaService', function($scope, MediaService) {
@@ -322,6 +313,9 @@ angular.module('starter.controllers', ['ngSanitize', 'com.2fdevs.videogular', 'c
   };
   controller.onPlayerReady = function(API) {
     controller.API = API;
+  };
+  controller.onComplete = function() {
+    console.log('completo');
   };
 }])
 
