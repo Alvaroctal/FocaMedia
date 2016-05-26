@@ -1,4 +1,4 @@
-angular.module('starter.controllers', ['ngSanitize', 'com.2fdevs.videogular', 'com.2fdevs.videogular.plugins.controls', 'com.2fdevs.videogular.plugins.overlayplay', 'com.2fdevs.videogular.plugins.poster', 'com.2fdevs.videogular.plugins.buffering'])
+angular.module('starter.controllers', ['ngSanitize', 'com.2fdevs.videogular', 'com.2fdevs.videogular.plugins.controls', 'com.2fdevs.videogular.plugins.overlayplay', 'com.2fdevs.videogular.plugins.poster'])
 
 .factory('MediaService', ['$q', '$http', '$ionicLoading', function($q, $http, $ionicLoading) {
 
@@ -86,7 +86,6 @@ angular.module('starter.controllers', ['ngSanitize', 'com.2fdevs.videogular', 'c
 
   $scope.cancel = function() {
     canceler.resolve();
-    $ionicLoading.hide;
   }
 
   $scope.connect = function(ip, port) {
@@ -99,15 +98,17 @@ angular.module('starter.controllers', ['ngSanitize', 'com.2fdevs.videogular', 'c
         // Connection Success
         
         localStorage.setItem("ip", ip); localStorage.setItem("port", port);
-        $ionicLoading.hide;
+
+        $ionicLoading.hide();
         $location.path('/app/movies');
+
       }
       else {
 
         // Connection Error
 
         canceler = $q.defer();
-        $ionicLoading.hide;
+
         $ionicLoading.show({
           template: 'Error de conexion',
           duration: 1000
