@@ -6,17 +6,14 @@ angular.module('starter.controllers', ['ngSanitize', 'com.2fdevs.videogular', 'c
   var address = null;
 
   return {
-    connect: function (ip, port, callback) {
-      $ionicLoading.show({ content: 'Loading', animation: 'fade-in', showBackdrop: true, maxWidth: 200, showDelay: 0 });
+    connect: function (ip, port, canceler, callback) {
 
-      $http.get('http://' + ip + ':' + port + '/index').then(
+      $http.get('http://' + ip + ':' + port + '/index', {timeout: canceler}).then(
         function(response) {
           address = ip + ':' + port;
           media = response.data.data;
-          $ionicLoading.hide();
           callback(null, response.data);
         }, function(response) {
-          $ionicLoading.hide();
           callback(response, null);
         });
     },
@@ -76,7 +73,7 @@ angular.module('starter.controllers', ['ngSanitize', 'com.2fdevs.videogular', 'c
   };
 }])
 
-.controller('ConnectionCtrl', ['$scope', '$location', '$ionicPopup', '$ionicLoading', '$http', 'MediaService', function($scope, $location, $ionicPopup, $ionicLoading, $http, MediaService) {
+.controller('ConnectionCtrl', ['$scope', '$location', '$ionicPopup', '$ionicLoading', '$http', '$q', '$ionicLoading', 'MediaService', function($scope, $location, $ionicPopup, $ionicLoading, $http, $q, $ionicLoading, MediaService) {
 
   //----------------------------------------------------------------------------
   //  Connection Controller
@@ -85,20 +82,32 @@ angular.module('starter.controllers', ['ngSanitize', 'com.2fdevs.videogular', 'c
   $scope.ip = localStorage.getItem("ip");
   $scope.port = localStorage.getItem("port");
 
+  var canceler = $q.defer();
+
+  $scope.cancel = function() {
+    canceler.resolve();
+    $ionicLoading.hide;
+  }
+
   $scope.connect = function(ip, port) {
-    MediaService.connect(ip, port, function(err, data) {
+
+    $ionicLoading.show({ template: 'Cargando... <button class="button button-clear" style="line-height: normal; min-height: 0; min-width: 0;" ng-click="cancel()"><i class="ion-close-circled"></i></button>' ,  scope: $scope, animation: 'fade-in', showBackdrop: true, maxWidth: 200, showDelay: 0 });
+
+    MediaService.connect(ip, port, canceler.promise, function(err, data) {
       if (! err) {
+
         // Connection Success
-
-        //Save last configuration
-        localStorage.setItem("ip", ip);
-        localStorage.setItem("port", port);
-
+        
+        localStorage.setItem("ip", ip); localStorage.setItem("port", port);
+        $ionicLoading.hide;
         $location.path('/app/movies');
       }
       else {
+
         // Connection Error
 
+        canceler = $q.defer();
+        $ionicLoading.hide;
         $ionicLoading.show({
           template: 'Error de conexion',
           duration: 1000
